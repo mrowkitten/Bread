@@ -60,5 +60,9 @@ fun main(args: Array<String>) {
         println(template.getJson())
     }
 
-    try { CodeClient.buildTemplate(templates) } catch (ignored: ConnectException) { }
+    try {
+        CodeClient.buildTemplate(templates)
+    } catch (exc: ConnectException) {
+        exc.printStackTrace()
+    }
 }

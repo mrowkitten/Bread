@@ -158,6 +158,23 @@ object IndexConverter : AstConverter {
         val left = TreeConverter.convertTree(tree.right!!, template, objects) as VarItem
         val variable = VarItem.tempVar()
         println("$v is type of ${v.type} - ${VariableTracker.getSavedItem(  v)}")
+
+        if (VariableTracker.getSavedType(v) == DFVarType.DICT || left.type == DFVarType.STRING) {
+            template.addCodeBlock(DFCodeBlock(DFCodeType.SET_VARIABLE, "GetDictValue").setContent(variable, v, left))
+            println(variable)
+            println(v)
+            println(left)
+            println("dict")
+            println(VariableTracker.getSavedItem(v))
+            println(VariableTracker.getSavedItem(v).value)
+
+            try {
+                VariableTracker.setSavedType(variable, (VariableTracker.getSavedItem(v).value as Map<*, *>)[left.value.toString()] as? VarItem ?: VarItem.num(0))
+            } catch (ignored: Exception) { }
+
+            return variable
+        }
+
         if (VariableTracker.getSavedType(v) == DFVarType.LIST) {
             val plusOne = VarItem.num("%math(1+${left})")
             template.addCodeBlock(DFCodeBlock(DFCodeType.SET_VARIABLE, "GetListValue").setContent(variable, v, plusOne))
@@ -169,17 +186,6 @@ object IndexConverter : AstConverter {
             println(VariableTracker.getSavedItem(v).value)
             try {
                 VariableTracker.setSavedType(variable, (VariableTracker.getSavedItem(v).value as List<*>)[left.value.toString().toIntOrNull() ?: 0] as? VarItem ?: VarItem.num(0))
-            } catch (ignored: Exception) { }
-        } else if (VariableTracker.getSavedType(v) == DFVarType.DICT) {
-            template.addCodeBlock(DFCodeBlock(DFCodeType.SET_VARIABLE, "GetDictValue").setContent(variable, v, left))
-            println(variable)
-            println(v)
-            println(left)
-            println("dict")
-            println(VariableTracker.getSavedItem(v))
-            println(VariableTracker.getSavedItem(v).value)
-            try {
-                VariableTracker.setSavedType(variable, (VariableTracker.getSavedItem(v).value as Map<*, *>)[left.value.toString()] as? VarItem ?: VarItem.num(0))
             } catch (ignored: Exception) { }
         }
 

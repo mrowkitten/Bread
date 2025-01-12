@@ -29,7 +29,9 @@ class CodeClient {
     }
 
     class CCSetInvClient(uri: URI, private val templates: List<String>) : WebSocketClient(uri) {
-        override fun onOpen(handshakedata: ServerHandshake?) { }
+        override fun onOpen(handshakedata: ServerHandshake?) {
+            send("scopes inventory")
+        }
 
         override fun onMessage(message: String?) {
             println(message)
@@ -59,7 +61,9 @@ class CodeClient {
             if (p0 == "place done") close()
         }
 
-        override fun onOpen(p0: ServerHandshake?) { }
+        override fun onOpen(p0: ServerHandshake?) {
+            send("scopes write_code")
+        }
 
         override fun onClose(p0: Int, p1: String?, p2: Boolean) { }
 
