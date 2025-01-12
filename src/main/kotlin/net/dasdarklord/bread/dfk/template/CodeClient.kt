@@ -37,7 +37,7 @@ class CodeClient {
             println(message)
             if (message == "auth") {
                 for (template in templates) {
-                    send("give {Count:1b,id:\"minecraft:ender_chest\",tag:{PublicBukkitValues:{\"hypercube:codetemplatedata\":'{\"author\":\"guh\",\"name\":\"hi\",\"version\":1,\"code\":\"$template\"}'}}}")
+                    send("give {Count:1b,id:\"minecraft:ender_chest\",components:{\"minecraft:custom_data\":{PublicBukkitValues:{\"hypercube:codetemplatedata\":'{\"code\":\"$template\",\"version\":\"1\",\"name\":\"template\",\"author\":\"Bread Template Generator\"}}}}\"}'}}}}")
                 }
                 close()
             }
@@ -62,7 +62,7 @@ class CodeClient {
         }
 
         override fun onOpen(p0: ServerHandshake?) {
-            send("scopes write_code")
+            send("scopes write_code clear_plot")
         }
 
         override fun onClose(p0: Int, p1: String?, p2: Boolean) { }

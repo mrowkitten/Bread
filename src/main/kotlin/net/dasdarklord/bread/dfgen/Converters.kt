@@ -323,6 +323,7 @@ object DecrementConverter : AstConverter {
 object AssignmentConverter : AstConverter {
     override fun convert(tree: TreeNode, template: DFTemplate, objects: MutableMap<String, DFLObject>): VarItem {
         val left = WordConverter.convert(tree.left!!, template, objects)
+
         var rightNode = tree.right!!
         if (rightNode.type == "call") {
             println(rightNode)
@@ -334,6 +335,16 @@ object AssignmentConverter : AstConverter {
                 return left
             }
         }
+
+        var pushed: String? = null
+        var scope: DFVariable.VariableScope? = null
+        if (left is DFVariable) {
+            val map = left.value as Map<String, Any>
+            pushed = map["name"].toString()
+            scope = map["scope"] as DFVariable.VariableScope
+            VarItem.pushTempVar(pushed, scope)
+        }
+
         val right = TreeConverter.convertTree(rightNode, template, objects)
         if (right is TreeNode || right is CustomIf) {
             template.addCodeBlock(DFCodeBlock(DFCodeType.SET_VARIABLE, "=").setContent(
@@ -343,6 +354,7 @@ object AssignmentConverter : AstConverter {
                     objects
                 ), FalseConverter.convert(tree.left, template, objects)
             ))
+
             if ((right is TreeNode && (right.type == "eq" || right.type == "neq" || right.type == "geq" || right.type == "leq" ||
                         right.type == "lt" || right.type == "gt")) ||
                 (right is CustomIf)) {
@@ -369,16 +381,31 @@ object AssignmentConverter : AstConverter {
 
                 val item = TreeConverter.convertTree(tree.left, template, objects) as VarItem
                 VariableTracker.setSavedType(item, DFVarType.NUMBER)
+
+                if (pushed != null) VarItem.popTempVar(pushed)
                 return item
             }
             else throw UnsupportedOperationException("Expected a value or condition but got $right")
         } else {
             val rightVarItem = right as? VarItem ?: VarItem.num(0)
-            template.addCodeBlock(
-                DFCodeBlock(DFCodeType.SET_VARIABLE, "=")
-                    .setContent(left, rightVarItem)
-            )
+
+            var isEqual = false
+            if (rightVarItem is DFVariable) {
+                val map = left.value as Map<String, Any>
+                val name = map["name"].toString()
+                val nScope = map["scope"] as DFVariable.VariableScope;
+                isEqual = pushed == name && scope == nScope
+            }
+
+            if (!isEqual) {
+                template.addCodeBlock(
+                    DFCodeBlock(DFCodeType.SET_VARIABLE, "=")
+                        .setContent(left, rightVarItem)
+                )
+            }
             VariableTracker.setSavedType(left, VariableTracker.getSavedItem(rightVarItem))
+
+            if (pushed != null) VarItem.popTempVar(pushed)
             return rightVarItem
         }
     }
