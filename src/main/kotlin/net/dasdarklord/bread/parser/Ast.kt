@@ -1,9 +1,9 @@
-package parser
+package net.dasdarklord.bread.parser
 
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import dfk.item.DFVarType
+import net.dasdarklord.bread.dfk.item.DFVarType
 
 sealed class Ast {
     class Event(val name: String, val code: Block, val eventType: EventType) : Ast() {

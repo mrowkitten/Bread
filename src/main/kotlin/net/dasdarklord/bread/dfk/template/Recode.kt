@@ -1,4 +1,4 @@
-package dfk.template
+package net.dasdarklord.bread.dfk.template
 
 import com.google.gson.JsonObject
 import java.io.BufferedWriter

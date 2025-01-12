@@ -1,12 +1,12 @@
-package dfgen
+package net.dasdarklord.bread.dfgen
 
-import dfk.codeblock.DFCodeBlock
-import dfk.codeblock.DFCodeType
-import dfk.item.DFVarType
-import dfk.item.VarItem
-import dfk.template.DFTemplate
-import parser.Ast
-import parser.TreeNode
+import net.dasdarklord.bread.dfk.codeblock.DFCodeBlock
+import net.dasdarklord.bread.dfk.codeblock.DFCodeType
+import net.dasdarklord.bread.dfk.item.DFVarType
+import net.dasdarklord.bread.dfk.item.VarItem
+import net.dasdarklord.bread.dfk.template.DFTemplate
+import net.dasdarklord.bread.parser.Ast
+import net.dasdarklord.bread.parser.TreeNode
 
 open class DFLObject {
     val fields: MutableMap<String, AstConverter> = mutableMapOf()

@@ -1,4 +1,4 @@
-package parser
+package net.dasdarklord.bread.parser
 
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement

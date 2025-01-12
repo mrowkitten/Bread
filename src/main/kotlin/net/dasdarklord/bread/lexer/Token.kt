@@ -1,4 +1,4 @@
-package lexer
+package net.dasdarklord.bread.lexer
 
 import com.google.gson.JsonObject
 

@@ -1,14 +1,14 @@
-package dfk.template
+package net.dasdarklord.bread.dfk.template
 
 import com.google.gson.Gson
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import com.google.gson.JsonPrimitive
-import dfk.codeblock.DFCodeBlock
-import dfk.codeblock.DFCodeType
-import dfk.item.DFVarType
-import dfk.item.DFVariable
-import dfk.item.VarItem
+import net.dasdarklord.bread.dfk.codeblock.DFCodeBlock
+import net.dasdarklord.bread.dfk.codeblock.DFCodeType
+import net.dasdarklord.bread.dfk.item.DFVarType
+import net.dasdarklord.bread.dfk.item.DFVariable
+import net.dasdarklord.bread.dfk.item.VarItem
 import java.io.*
 import java.nio.charset.StandardCharsets
 import java.util.zip.GZIPInputStream
@@ -54,7 +54,8 @@ class DFTemplate {
             val blocks = json["blocks"].asJsonArray
             for (block in blocks.map { it.asJsonObject }) {
                 if (block["id"].asString == "bracket") {
-                    template.addCodeBlock(DFCodeBlock.bracket(
+                    template.addCodeBlock(
+                        DFCodeBlock.bracket(
                         block["direct"].asString == "open",
                         block["type"].asString == "repeat"
                     ))

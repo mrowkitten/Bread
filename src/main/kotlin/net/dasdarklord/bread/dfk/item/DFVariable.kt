@@ -1,4 +1,4 @@
-package dfk.item
+package net.dasdarklord.bread.dfk.item
 
 class DFVariable(varName: String, varScope: VariableScope) : VarItem(DFVarType.VARIABLE, mapOf("name" to varName, "scope" to varScope)) {
 

@@ -1,6 +1,6 @@
-package dfk.codeblock
+package net.dasdarklord.bread.dfk.codeblock
 
-import dfk.item.VarItem
+import net.dasdarklord.bread.dfk.item.VarItem
 
 class DFCodeBlock(var type: DFCodeType, var action: String = "", var target: String = "", var inverter: String = "") {
     val tags: MutableMap<String, String> = mutableMapOf()

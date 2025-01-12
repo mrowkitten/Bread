@@ -1,4 +1,4 @@
-package dfk.item
+package net.dasdarklord.bread.dfk.item
 
 open class VarItem(t: DFVarType, v: Any) {
     val type: DFVarType = t

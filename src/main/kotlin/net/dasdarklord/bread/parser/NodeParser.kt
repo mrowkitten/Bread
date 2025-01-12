@@ -1,8 +1,8 @@
-package parser
+package net.dasdarklord.bread.parser
 
-import dfk.item.DFVariable
-import lexer.Token
-import lexer.TokenType
+import net.dasdarklord.bread.dfk.item.DFVariable
+import net.dasdarklord.bread.lexer.Token
+import net.dasdarklord.bread.lexer.TokenType
 
 class NodeParser(val tokens: MutableList<Token>) {
     var index = 0
@@ -129,14 +129,16 @@ class NodeParser(val tokens: MutableList<Token>) {
                         tokens.add(index, Token(
                             TokenType.NUMBER,
                             -((nextToken.value as Number).toDouble())
-                        ))
+                        )
+                        )
 
                         return parseAllOn(parseFactor())
                     } else if (nextToken.type == TokenType.WORD || nextToken.type == TokenType.OPEN_PAREN) {
                         tokens.add(index, Token(
                             TokenType.NUMBER,
                             0.0
-                        ))
+                        )
+                        )
 
                         return parseAllOn(parseFactor())
                     }
@@ -340,10 +342,12 @@ class NodeParser(val tokens: MutableList<Token>) {
             value = checkExpression,
             left = ifExpression,
             right = elseExpression,
-            arguments = mutableListOf(TreeNode(
+            arguments = mutableListOf(
+                TreeNode(
                 "invert",
                 value = inverted
-            ))
+            )
+            )
         )
     }
 

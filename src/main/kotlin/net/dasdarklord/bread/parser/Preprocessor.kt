@@ -1,9 +1,9 @@
-package parser
+package net.dasdarklord.bread.parser
 
-import dfk.template.DFTemplate
-import fullLex
-import lexer.Token
-import lexer.TokenType
+import net.dasdarklord.bread.dfk.template.DFTemplate
+import net.dasdarklord.bread.fullLex
+import net.dasdarklord.bread.lexer.Token
+import net.dasdarklord.bread.lexer.TokenType
 import java.io.File
 import java.util.Base64
 

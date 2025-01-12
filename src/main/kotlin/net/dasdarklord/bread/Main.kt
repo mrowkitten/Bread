@@ -1,12 +1,14 @@
-import dfgen.convertAstToDF
-import dfk.item.DFVarType
-import dfk.template.CodeClient
-import dfk.template.DFTemplate
-import lexer.Lexer
-import lexer.Token
-import parser.Parser
-import parser.preprocessImports
-import parser.preprocessTemplates
+package net.dasdarklord.bread
+
+import net.dasdarklord.bread.dfgen.convertAstToDF
+import net.dasdarklord.bread.dfk.item.DFVarType
+import net.dasdarklord.bread.dfk.template.CodeClient
+import net.dasdarklord.bread.dfk.template.DFTemplate
+import net.dasdarklord.bread.lexer.Lexer
+import net.dasdarklord.bread.lexer.Token
+import net.dasdarklord.bread.parser.Parser
+import net.dasdarklord.bread.parser.preprocessImports
+import net.dasdarklord.bread.parser.preprocessTemplates
 import java.io.File
 import java.net.ConnectException
 

@@ -1,7 +1,7 @@
-package dfgen
+package net.dasdarklord.bread.dfgen
 
-import dfk.template.DFTemplate
-import parser.TreeNode
+import net.dasdarklord.bread.dfk.template.DFTemplate
+import net.dasdarklord.bread.parser.TreeNode
 
 class TreeConverter {
     companion object {

@@ -1,4 +1,4 @@
-package dfk.template
+package net.dasdarklord.bread.dfk.template
 
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake

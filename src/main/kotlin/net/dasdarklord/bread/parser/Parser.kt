@@ -1,11 +1,11 @@
-package parser
+package net.dasdarklord.bread.parser
 
-import dfgen.VariableTracker
-import dfgen.WordConverter
-import dfk.item.DFVarType
-import dfk.item.DFVariable
-import lexer.Token
-import lexer.TokenType
+import net.dasdarklord.bread.dfgen.VariableTracker
+import net.dasdarklord.bread.dfgen.WordConverter
+import net.dasdarklord.bread.dfk.item.DFVarType
+import net.dasdarklord.bread.dfk.item.DFVariable
+import net.dasdarklord.bread.lexer.Token
+import net.dasdarklord.bread.lexer.TokenType
 
 class Parser(val input: MutableList<Token>) {
 

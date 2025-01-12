@@ -1,4 +1,4 @@
-package dfk.codeblock
+package net.dasdarklord.bread.dfk.codeblock
 
 enum class DFCodeType(jn: String, bn: String, b: Boolean, c: Boolean) {
     PLAYER_EVENT("event", "Player Event", false, false),

@@ -1,14 +1,14 @@
-package dfgen
+package net.dasdarklord.bread.dfgen
 
-import dfk.codeblock.DFCodeBlock
-import dfk.codeblock.DFCodeType
-import dfk.item.DFVarType
-import dfk.item.DFVariable
-import dfk.item.VarItem
-import dfk.template.DFTemplate
-import pairs
-import parser.Ast
-import parser.TreeNode
+import net.dasdarklord.bread.dfk.codeblock.DFCodeBlock
+import net.dasdarklord.bread.dfk.codeblock.DFCodeType
+import net.dasdarklord.bread.dfk.item.DFVarType
+import net.dasdarklord.bread.dfk.item.DFVariable
+import net.dasdarklord.bread.dfk.item.VarItem
+import net.dasdarklord.bread.dfk.template.DFTemplate
+import net.dasdarklord.bread.pairs
+import net.dasdarklord.bread.parser.Ast
+import net.dasdarklord.bread.parser.TreeNode
 
 val astConverters = mapOf(
     "number" to NumberConverter, "word" to WordConverter, "string" to StringConverter, "styled" to StyledTextConverter, "list" to ListConverter, "dict" to DictConverter,
@@ -157,7 +157,7 @@ object IndexConverter : AstConverter {
         if (v !is VarItem) return VarItem.num(0)
         val left = TreeConverter.convertTree(tree.right!!, template, objects) as VarItem
         val variable = VarItem.tempVar()
-        println("$v is type of ${v.type} - ${VariableTracker.getSavedItem(  v)}")
+        println("$v is type of ${v.type} - ${VariableTracker.getSavedItem(v)}")
 
         if (VariableTracker.getSavedType(v) == DFVarType.DICT || left.type == DFVarType.STRING) {
             template.addCodeBlock(DFCodeBlock(DFCodeType.SET_VARIABLE, "GetDictValue").setContent(variable, v, left))
@@ -169,7 +169,10 @@ object IndexConverter : AstConverter {
             println(VariableTracker.getSavedItem(v).value)
 
             try {
-                VariableTracker.setSavedType(variable, (VariableTracker.getSavedItem(v).value as Map<*, *>)[left.value.toString()] as? VarItem ?: VarItem.num(0))
+                VariableTracker.setSavedType(
+                    variable, (VariableTracker.getSavedItem(v).value as Map<*, *>)[left.value.toString()] as? VarItem
+                        ?: VarItem.num(0)
+                )
             } catch (ignored: Exception) { }
 
             return variable
@@ -185,7 +188,12 @@ object IndexConverter : AstConverter {
             println(VariableTracker.getSavedItem(v))
             println(VariableTracker.getSavedItem(v).value)
             try {
-                VariableTracker.setSavedType(variable, (VariableTracker.getSavedItem(v).value as List<*>)[left.value.toString().toIntOrNull() ?: 0] as? VarItem ?: VarItem.num(0))
+                VariableTracker.setSavedType(
+                    variable,
+                    (VariableTracker.getSavedItem(v).value as List<*>)[left.value.toString().toIntOrNull()
+                        ?: 0] as? VarItem
+                        ?: VarItem.num(0)
+                )
             } catch (ignored: Exception) { }
         }
 
@@ -249,7 +257,8 @@ object ExponentConverter : AstConverter {
         val left = TreeConverter.convertTree(tree.left!!, template, objects) as VarItem
         val right = TreeConverter.convertTree(tree.right!!, template, objects) as VarItem
         val variable = VarItem.tempVar()
-        template.addCodeBlock(DFCodeBlock(
+        template.addCodeBlock(
+            DFCodeBlock(
             DFCodeType.SET_VARIABLE,
             "Exponent"
         ).setContent(variable, left, right))
@@ -263,7 +272,8 @@ object RemainderConverter : AstConverter {
         val left = TreeConverter.convertTree(tree.left!!, template, objects) as VarItem
         val right = TreeConverter.convertTree(tree.right!!, template, objects) as VarItem
         val variable = VarItem.tempVar()
-        template.addCodeBlock(DFCodeBlock(
+        template.addCodeBlock(
+            DFCodeBlock(
             DFCodeType.SET_VARIABLE,
             "%"
         ).setContent(variable, left, right))
@@ -277,7 +287,8 @@ object ModuloConverter : AstConverter {
         val left = TreeConverter.convertTree(tree.left!!, template, objects) as VarItem
         val right = TreeConverter.convertTree(tree.right!!, template, objects) as VarItem
         val variable = VarItem.tempVar()
-        template.addCodeBlock(DFCodeBlock(
+        template.addCodeBlock(
+            DFCodeBlock(
             DFCodeType.SET_VARIABLE,
             "%"
         ).setContent(variable, left, right).setTag("Remainder Mode", "Modulo"))
@@ -289,7 +300,8 @@ object ModuloConverter : AstConverter {
 object IncrementConverter : AstConverter {
     override fun convert(tree: TreeNode, template: DFTemplate, objects: MutableMap<String, DFLObject>): VarItem {
         val variable = TreeConverter.convertTree(tree.value!! as TreeNode, template, objects) as VarItem
-        template.addCodeBlock(DFCodeBlock(DFCodeType.SET_VARIABLE, "+=").setContent(variable)
+        template.addCodeBlock(
+            DFCodeBlock(DFCodeType.SET_VARIABLE, "+=").setContent(variable)
         )
         VariableTracker.setSavedType(variable, DFVarType.NUMBER)
         return variable
@@ -299,7 +311,8 @@ object IncrementConverter : AstConverter {
 object DecrementConverter : AstConverter {
     override fun convert(tree: TreeNode, template: DFTemplate, objects: MutableMap<String, DFLObject>): VarItem {
         val variable = VarItem.tempVar()
-        template.addCodeBlock(DFCodeBlock(DFCodeType.SET_VARIABLE, "-=")
+        template.addCodeBlock(
+            DFCodeBlock(DFCodeType.SET_VARIABLE, "-=")
             .setContent(variable, TreeConverter.convertTree(tree.value!! as TreeNode, template, objects) as VarItem)
         )
         VariableTracker.setSavedType(variable, DFVarType.NUMBER)
@@ -323,7 +336,13 @@ object AssignmentConverter : AstConverter {
         }
         val right = TreeConverter.convertTree(rightNode, template, objects)
         if (right is TreeNode || right is CustomIf) {
-            template.addCodeBlock(DFCodeBlock(DFCodeType.SET_VARIABLE, "=").setContent(WordConverter.convert(tree.left, template, objects), FalseConverter.convert(tree.left, template, objects)))
+            template.addCodeBlock(DFCodeBlock(DFCodeType.SET_VARIABLE, "=").setContent(
+                WordConverter.convert(
+                    tree.left,
+                    template,
+                    objects
+                ), FalseConverter.convert(tree.left, template, objects)
+            ))
             if ((right is TreeNode && (right.type == "eq" || right.type == "neq" || right.type == "geq" || right.type == "leq" ||
                         right.type == "lt" || right.type == "gt")) ||
                 (right is CustomIf)) {
@@ -437,7 +456,8 @@ object CallConverter : AstConverter {
         if (DefaultObject.accessFunc(tree.value!! as String) != null) return DefaultObject.accessFunc(tree.value as String)!!.convert(tree, template, objects)
         else {
             val varItemArgs = tree.arguments.map { TreeConverter.convertTree(it, template, objects) as VarItem }
-            template.addCodeBlock(DFCodeBlock(DFCodeType.CALL_FUNCTION, tree.value as String)
+            template.addCodeBlock(
+                DFCodeBlock(DFCodeType.CALL_FUNCTION, tree.value as String)
                 .setContent(*varItemArgs.toTypedArray()))
             for (function in pairs) {
                 val functionName = function.first
@@ -460,7 +480,8 @@ object CallConverter : AstConverter {
 
 object StartProcConverter : AstConverter {
     override fun convert(tree: TreeNode, template: DFTemplate, objects: MutableMap<String, DFLObject>) {
-        template.addCodeBlock(DFCodeBlock(DFCodeType.START_PROCESS, tree.value as String)
+        template.addCodeBlock(
+            DFCodeBlock(DFCodeType.START_PROCESS, tree.value as String)
             .setTag("Local Variables", tree.arguments[0].value as String)
             .setTag("Target Mode", tree.arguments[1].value as String))
     }
@@ -512,7 +533,10 @@ object IfConverter : AstConverter {
         }
         var ifCodeBlock = DFCodeBlock(DFCodeType.IF_VARIABLE, action)
         if (action == "?") { // Assume it's  `if (boolVariable)` syntax
-            ifCodeBlock = ifCodeBlock.setContent(TreeConverter.convertTree(check, template, objects) as VarItem, TrueConverter.convert(tree, template, objects))
+            ifCodeBlock = ifCodeBlock.setContent(
+                TreeConverter.convertTree(check, template, objects) as VarItem,
+                TrueConverter.convert(tree, template, objects)
+            )
             ifCodeBlock.action = "="
         } else if (action == "ListContains") {
             val rightItem = TreeConverter.convertTree(check.right!!, template, objects) as VarItem
@@ -520,19 +544,35 @@ object IfConverter : AstConverter {
                 action = "DictHasKey"
                 ifCodeBlock.action = action
             }
-            ifCodeBlock = ifCodeBlock.setContent(TreeConverter.convertTree(check.right, template, objects) as VarItem, TreeConverter.convertTree(check.left!!, template, objects) as VarItem)
+            ifCodeBlock = ifCodeBlock.setContent(
+                TreeConverter.convertTree(check.right, template, objects) as VarItem, TreeConverter.convertTree(
+                    check.left!!,
+                    template,
+                    objects
+                ) as VarItem)
         } else if (action == "StringMatches") {
             var rightNode = check.right!!
             if (rightNode.type == "regex") {
                 rightNode = rightNode.left!!
                 ifCodeBlock = ifCodeBlock.setTag("Regular Expressions", "Enable")
             }
-            ifCodeBlock = ifCodeBlock.setContent(TreeConverter.convertTree(rightNode, template, objects) as VarItem, TreeConverter.convertTree(check.left!!, template, objects) as VarItem)
+            ifCodeBlock = ifCodeBlock.setContent(
+                TreeConverter.convertTree(rightNode, template, objects) as VarItem, TreeConverter.convertTree(
+                    check.left!!,
+                    template,
+                    objects
+                ) as VarItem)
         } else {
             val items = mutableListOf(TreeConverter.convertTree(check.left!!, template, objects) as VarItem)
             if (action == "=" || action == "!=") {
                 if (check.right!!.type == "list") {
-                    for (value in (check.right.value as List<*>).map { TreeConverter.convertTree(it as TreeNode, template, objects) }) {
+                    for (value in (check.right.value as List<*>).map {
+                        TreeConverter.convertTree(
+                            it as TreeNode,
+                            template,
+                            objects
+                        )
+                    }) {
                         if (value is VarItem) items.add(value)
                     }
                 } else {

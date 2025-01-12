@@ -1,4 +1,4 @@
-package lexer
+package net.dasdarklord.bread.lexer
 
 class Lexer(val source: String) {
 
@@ -19,10 +19,12 @@ class Lexer(val source: String) {
                         position++
                     }
 
-                    tokens.add(Token(
+                    tokens.add(
+                        Token(
                         TokenType.NUMBER,
                         num.toDouble()
-                    ))
+                    )
+                    )
                 }
                 source[position] == '$' && (source[position + 1] == '"' || source[position + 1] == '\'') || (source[position] == '"' || source[position] == '\'') -> {
                     val rich = source[position] == '$'
@@ -60,7 +62,8 @@ class Lexer(val source: String) {
                     if (rich) tokenType = TokenType.STYLED_TEXT
                     else tokenType = TokenType.STRING
 
-                    tokens.add(Token(
+                    tokens.add(
+                        Token(
                         tokenType,
                         str)
                     )
@@ -108,10 +111,12 @@ class Lexer(val source: String) {
                         }
                     }
 
-                    tokens.add(Token(
+                    tokens.add(
+                        Token(
                         tokenType,
                         str
-                    ))
+                    )
+                    )
                 }
                 source[position] == '\n' -> {
                     position++
@@ -150,10 +155,12 @@ class Lexer(val source: String) {
                                 }
                             }
 
-                            tokens.add(Token(
+                            tokens.add(
+                                Token(
                                 type,
                                 op
-                            ))
+                            )
+                            )
 
                             if (type == TokenType.ACCESSOR) {
                                 if (tokens.size > 1) {

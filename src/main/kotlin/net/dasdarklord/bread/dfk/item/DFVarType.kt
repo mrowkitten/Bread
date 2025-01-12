@@ -1,4 +1,4 @@
-package dfk.item
+package net.dasdarklord.bread.dfk.item
 
 enum class DFVarType(i: String, adi: String) {
     STRING("txt", "TEXT"),

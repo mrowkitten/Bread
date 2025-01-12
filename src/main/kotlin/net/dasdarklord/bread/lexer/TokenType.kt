@@ -1,4 +1,4 @@
-package lexer
+package net.dasdarklord.bread.lexer
 
 enum class TokenType(val id: String, val word: String? = null, val regex: Boolean = false) {
     // Types

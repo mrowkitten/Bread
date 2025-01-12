@@ -1,8 +1,8 @@
-package dfgen
+package net.dasdarklord.bread.dfgen
 
-import dfk.item.DFVarType
-import dfk.item.VarItem
-import dfk.template.DFTemplate
+import net.dasdarklord.bread.dfk.item.DFVarType
+import net.dasdarklord.bread.dfk.item.VarItem
+import net.dasdarklord.bread.dfk.template.DFTemplate
 
 object VariableTracker {
 
