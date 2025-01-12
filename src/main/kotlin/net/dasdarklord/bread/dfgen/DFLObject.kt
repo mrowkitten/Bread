@@ -246,11 +246,26 @@ object DefaultObject : DFLObject() {
 
         val mathFunctions = buildMap {
             put("sin", DFCodeBlock(DFCodeType.SET_VARIABLE, "Sine").setTag("Input", "Degrees"))
+            put("asin", DFCodeBlock(DFCodeType.SET_VARIABLE, "Sine").setTag("Input", "Degrees").setTag("Sine Variant", "Inverse sine (arcsine)"))
+            put("sinh", DFCodeBlock(DFCodeType.SET_VARIABLE, "Sine").setTag("Input", "Degrees").setTag("Sine Variant", "Hyperbolic sine"))
             put("sinrad", DFCodeBlock(DFCodeType.SET_VARIABLE, "Sine").setTag("Input", "Radians"))
+            put("asinrad", DFCodeBlock(DFCodeType.SET_VARIABLE, "Sine").setTag("Input", "Radians").setTag("Sine Variant", "Inverse sine (arcsine)"))
+            put("sinhrad", DFCodeBlock(DFCodeType.SET_VARIABLE, "Sine").setTag("Input", "Radians").setTag("Sine Variant", "Hyperbolic sine"))
+
             put("cos", DFCodeBlock(DFCodeType.SET_VARIABLE, "Cosine").setTag("Input", "Degrees"))
+            put("acos", DFCodeBlock(DFCodeType.SET_VARIABLE, "Cosine").setTag("Input", "Degrees").setTag("Cosine Variant", "Inverse sine (arccosine)"))
+            put("cosh", DFCodeBlock(DFCodeType.SET_VARIABLE, "Cosine").setTag("Input", "Degrees").setTag("Cosine Variant", "Hyperbolic cosine"))
             put("cosrad", DFCodeBlock(DFCodeType.SET_VARIABLE, "Cosine").setTag("Input", "Radians"))
-            put("tan", DFCodeBlock(DFCodeType.SET_VARIABLE, "Tangent").setTag("Input", "Degrees"))
-            put("tanrad", DFCodeBlock(DFCodeType.SET_VARIABLE, "Tangent").setTag("Input", "Radians"))
+            put("acosrad", DFCodeBlock(DFCodeType.SET_VARIABLE, "Cosine").setTag("Input", "Radians").setTag("Cosine Variant", "Inverse cosine (arccosine)"))
+            put("coshrad", DFCodeBlock(DFCodeType.SET_VARIABLE, "Cosine").setTag("Input", "Radians").setTag("Cosine Variant", "Hyperbolic cosine"))
+
+            put("cos", DFCodeBlock(DFCodeType.SET_VARIABLE, "Tangent").setTag("Input", "Degrees"))
+            put("acos", DFCodeBlock(DFCodeType.SET_VARIABLE, "Tangent").setTag("Input", "Degrees").setTag("Tangent Variant", "Inverse tanget (arctangent)"))
+            put("cosh", DFCodeBlock(DFCodeType.SET_VARIABLE, "Tangent").setTag("Input", "Degrees").setTag("Tangent Variant", "Hyperbolic tanget"))
+            put("cosrad", DFCodeBlock(DFCodeType.SET_VARIABLE, "Tangent").setTag("Input", "Radians"))
+            put("acosrad", DFCodeBlock(DFCodeType.SET_VARIABLE, "Tangent").setTag("Input", "Radians").setTag("Tangent Variant", "Inverse tanget (arctangent)"))
+            put("coshrad", DFCodeBlock(DFCodeType.SET_VARIABLE, "Tangent").setTag("Input", "Radians").setTag("Tangent Variant", "Hyperbolic tanget"))
+
             put("clamp", DFCodeBlock(DFCodeType.SET_VARIABLE, "Clamp"))
             put("wrap", DFCodeBlock(DFCodeType.SET_VARIABLE, "Wrap"))
             put("bounce", DFCodeBlock(DFCodeType.SET_VARIABLE, "Bounce"))
