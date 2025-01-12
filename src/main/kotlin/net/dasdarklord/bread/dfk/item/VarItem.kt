@@ -46,5 +46,9 @@ open class VarItem(t: DFVarType, v: Any) {
         private fun nextTempInt(): Int {
             return cTempInt++
         }
+
+        fun resetTempCounter() {
+            cTempInt = 0
+        }
     }
 }

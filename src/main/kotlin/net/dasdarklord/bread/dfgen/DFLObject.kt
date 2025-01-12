@@ -253,6 +253,7 @@ object DefaultObject : DFLObject() {
             put("tanrad", DFCodeBlock(DFCodeType.SET_VARIABLE, "Tangent").setTag("Input", "Radians"))
             put("clamp", DFCodeBlock(DFCodeType.SET_VARIABLE, "Clamp"))
             put("wrap", DFCodeBlock(DFCodeType.SET_VARIABLE, "Wrap"))
+            put("bounce", DFCodeBlock(DFCodeType.SET_VARIABLE, "Bounce"))
             put("abs", DFCodeBlock(DFCodeType.SET_VARIABLE, "Absolute"))
             put("log", DFCodeBlock(DFCodeType.SET_VARIABLE, "Logarithm"))
             put("round", DFCodeBlock(DFCodeType.SET_VARIABLE, "RoundNumber"))
@@ -262,6 +263,9 @@ object DefaultObject : DFLObject() {
             put("min", DFCodeBlock(DFCodeType.SET_VARIABLE, "MinNumber"))
             put("max", DFCodeBlock(DFCodeType.SET_VARIABLE, "MaxNumber"))
             put("random", DFCodeBlock(DFCodeType.SET_VARIABLE, "RandomNumber"))
+            put("average", DFCodeBlock(DFCodeType.SET_VARIABLE, "Average"))
+            put("root", DFCodeBlock(DFCodeType.SET_VARIABLE, "Root"))
+            put("sqrt", DFCodeBlock(DFCodeType.SET_VARIABLE, "Root"))
         }
         for (mathFunc in mathFunctions) {
             val converter = object : AstConverter {
