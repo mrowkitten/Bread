@@ -43,15 +43,16 @@ object VariableTracker {
         return getSavedType(name)
     }
 
-    fun getSavedType(name: String): DFVarType {
+    private fun getSavedType(name: String, level: Int): DFVarType {
         val item = saved[name] ?: return DFVarType.ANY
+        if (level > 10) return DFVarType.ANY
 
         val type = saved[name]!!.type
         println(name)
         println(saved[name])
         println(type)
         if (type == DFVarType.VARIABLE) {
-            return getSavedType((item.value as Map<*, *>)["name"] as String)
+            return getSavedType((item.value as Map<*, *>)["name"] as String, level + 1)
         }
         if (type == DFVarType.GAME_VALUE) {
             val search = (item.value as Map<*, *>)["type"] as String
@@ -71,6 +72,10 @@ object VariableTracker {
         }
 
         return type
+    }
+
+    fun getSavedType(name: String): DFVarType {
+        return getSavedType(name, 0)
     }
 
 }
